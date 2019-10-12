@@ -6,6 +6,9 @@ var express                 = require('express'),
     LocalStrategy           = require('passport-local'),
     passportLocalMongoose   = require('passport-local-mongoose');
 
+var csv = require('csv-parser'),
+    fs  = require('fs');
+
 var CONNECTION_STRING = 'mongodb+srv://NathanLu:NathanLu@cluster0-dbqcz.mongodb.net/user-registration-db?retryWrites=true&w=majority'
 mongoose.connect(CONNECTION_STRING);
 
@@ -37,6 +40,30 @@ app.get('/', function(req, res) {
 });
 
 app.get('/dashboard', isLoggedIn, function(req, res) {
+    let userEmail = req.user.username;
+
+    // if user is not validated run this process
+    // else render file
+    // Validation process
+    /*
+    fs.createReadStream('')
+        .pipe(csv())
+        .on('data', (row) => {
+            if(userEmail === row) {
+                // find user and validate them
+            }
+            console.log(row);
+        })
+        .on('end', () => {
+            // Search db for userEmail and if they aren't validated let them know
+            // if validated, display data
+            console.log('CSV file processed');
+
+            req.user.paymentHistory;
+
+            res.render('dashboard');
+        })
+    */
     res.render('dashboard');
 });
 
@@ -46,8 +73,6 @@ app.get('/register', function(req, res) {
 });
 
 app.post('/register', function(req, res) {
-    req.body.username
-    req.body.password
     User.register(new User({username: req.body.username}), req.body.password, function(err, user) {
         if(err) {
             console.log(err);
