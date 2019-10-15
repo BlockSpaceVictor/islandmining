@@ -10,13 +10,19 @@ var UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    paymentHistory: [],
-    addresses: {
-        bitcoin: String,
-        etherium: String
-    }
+    prices: {
+        type: Array,
+        expiresAt: {
+            type: Date, 
+            expires: '10s'
+        }
+    },
+    bitcoinAddress: String,
+    referralAddress: String,
+
 });
 
 UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('User', UserSchema);
+

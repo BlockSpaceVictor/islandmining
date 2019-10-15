@@ -1,0 +1,3 @@
+CreatedDateTime,FirstName,LastName,ScanDOB,Email,Address,City,StateProvince,Country,DocumentType,ExpiryDate,IdScanResult,Message,AmlScreen,FacialMatch,ApiCallDuration
+1,nate,lu,1,nate@nate.com,lol,vancouver,,,,,,,,,
+2,second,hi,asda,dsadsa,,,,,,,,,,,

@@ -1,6 +1,404 @@
-<h1>This is the dashboard!</h1>
-<p>You found me!</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<li><a href="/register">Sign Up!</a></li>
-<li><a href="/login">Login!</a></li>
-<li><a href="/logout">Logout!</a></li>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+
+<body>
+    <!-- Token Sale Application -->
+    <div class="mb-40 py-4 px-16 bg-gray-100 flex flex-wrap">
+        <h3 class="heading-tertiary">
+            Dashboard
+        </h3>
+        <div class="ml-auto bg-purple-200 px-8 flex flex-wrap">
+            <h3 class="heading-tertiary">
+                Official Time:&nbsp;
+            </h3>
+            Nov 20, 2019 22:15:10 UTC
+        </div>
+    </div>
+
+    <section class="container mx-auto px-16 py-12 mb-16">
+        <h1 class="heading-primary mb-8">Token Sale Application</h1>
+        <div class="text-center mb-16">
+            <h2 class="heading-secondary">
+                To complete your application, please click the link below.<br>
+                You will be taken off-site to our 3rd-party KYC partner, iComply, and will be asked to set up a new
+                profile.
+            </h2>
+            <p style="color: #5D78FF">
+                At Island Mining, we take your data security seriously. We’ve partnered with iComply to provide an easy,
+                automated,
+                SSL-encrypted KYC process.
+            </p>
+        </div>
+
+
+        <div class="w-2/3 mx-auto">
+            <h3 class="heading-tertiary">
+                Instructions before you start:
+            </h3>
+            <ul>
+                <li><span class="font-bold">Have your Photo ID ready</span> (drivers license, passport, etc)</li>
+                <li><span class="font-bold">Find a well-lit space.</span> The facial recognition check will require your
+                    camera.</li>
+            </ul>
+
+            <div class="flex flex-wrap px-24 mb-16">
+                <div class="w-1/2">
+                    <h3 class="heading-tertiary">
+                        PC or Mac:
+                    </h3>
+                    <p>
+                        Make sure your webcam is enabled
+                    </p>
+                </div>
+                <div class="w-1/2">
+                    <h3 class="heading-tertiary">
+                        Mobile:
+                    </h3>
+                    <p>
+                        You can use your device’s camera
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-16 px-8 py-6 border-solid border-2 rounded-lg border-gray-500 shadow-lg flex flex-wrap">
+                <img src="assets/img/logo/iComply_logo.png" alt="">
+                <div class="text-center pl-8">
+                    <h2 class="heading-secondary">
+                        Begin KYC Registration
+                    </h2>
+                    <p>
+                        <a class="underline"
+                            href="https://platform.icomplyico.com/ico-registration/85645837-c7b1-4787-a4a9-1debfe956ad4/176">
+                            https://platform.icomplyico.com/ico-registration/85645837-c7b1-4787-a4a9-1debfe956ad4/176
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="flex flex-wrap w-1/2 mx-auto mb-16">
+                <h1 class="heading-tertiary w-1/2">
+                    KYC Status
+                </h1>
+                <% if(verified === true) { %>
+                <div class="alert alert-success font-bold text-center">
+                    Approved!
+                </div>
+                <% } else { %>
+                <div class="alert alert-warning font-bold text-center">
+                    Pending Approval
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment -->
+    <section class="container mx-auto px-16 py-12 mb-16">
+        <h1 class="heading-primary mb-8">Payment</h1>
+        <div class="w-2/3 mx-auto">
+            <% if(verified === true) { %>
+            <div class="alert alert-success font-bold text-center">
+                You are approved for the token sale!
+            </div>
+            <% } else { %>
+            <div class="alert alert-warning font-bold text-center">
+                Please complete KYC registration above.
+            </div>
+            <% } %>
+            <p class="heading-secondary text-center mb-16">
+                Follow the steps below to purchase MNT. Your tokens will be sent to your wallet shortly after purchase.
+            </p>
+        </div>
+
+
+
+        <div class="flex flex-wrap mb-16 text-center">
+            <div class="w-1/2">
+                <h3 class="heading-tertiary">
+                    Step 1:
+                </h3>
+                <p>
+                    <span class="font-bold">Click to lock in your conversion rate.</span><br>
+                    (Your rate will be locked in for 24 hours)
+                </p>
+            </div>
+            <div class="w-1/2">
+                <form id="lock-in" action="/update" method="POST">
+                    <button>Lock in conversion rates</button>
+                </form>
+            </div>
+        </div>
+        <div class="flex flex-wrap mb-16">
+            <div class="w-1/4 text-center px-2 flex flex-wrap">
+                <div class="w-3/4 py-4 border-solid border-2 border-gray-500 rounded-lg">
+                    <img class="mx-auto" src="assets/img/icon/MNT_icon.png" alt="MNT">
+                    <input id="MNT-conversion-input" onkeypress="calculateMNT()" type="number" value="123">
+                    MNT
+                </div>
+                <div class="w-1/4">
+                    &#61;
+                </div>
+            </div>
+
+            <div class="flex flex-wrap w-3/4">
+                <div class="w-1/3 text-center px-2">
+                    <div>
+                        BTC $
+                        <span id="BTC-price"><%= +(Math.round(prices['BTC'] + "e+2")  + "e-2") %></span>
+                    </div>
+                    <div id="MNT-to-BTC" class="py-4 border-solid border-2 border-gray-500 rounded-lg">
+                        <img class="mx-auto" src="assets/img/icon/BTC_icon.png" alt="BTC">
+                        0.00000624 BTC
+                    </div>
+                </div>
+                <div class="w-1/3 text-center px-2">
+                    <div>
+                        ETH $
+                        <span id="ETH-price"><%= +(Math.round(prices['ETH'] + "e+2")  + "e-2") %></span>
+                    </div>
+                    
+                    <div id="MNT-to-ETH" class="py-4 border-solid border-2 border-gray-500 rounded-lg">
+                        <img class="mx-auto" src="assets/img/icon/ETH_icon.png" alt="ETH">
+                        0.0004234 ETH
+                    </div>
+                </div>
+                <div class="w-1/3 text-center px-2">
+                    <div>
+                        LTC $
+                        <span id="LTC-price"><%= +(Math.round(prices['LTC'] + "e+2")  + "e-2") %></span>
+                    </div>
+                    
+                    <div id="MNT-to-LTC" class="py-4 border-solid border-2 border-gray-500 rounded-lg">
+                        <img class="mx-auto" src="assets/img/icon/LTC_icon.png" alt="LTC">
+                        0.001375 LTC
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="mx-auto w-2/3 alert alert-success font-bold text-center">
+            Your conversion rates will be locked in for hh:mm:ss !
+        </div>
+
+        <div class="text-center mb-16">
+            <h3 class="heading-tertiary">
+                Step 2:
+            </h3>
+            <p>
+                Send funds to any of the following addresses to complete your purchase of MNT
+            </p>
+        </div>
+        <div class="w-2/3 mx-auto mb-16">
+            <div class="mb-8 flex flex-wrap">
+                <div class="w-1/4 flex flex-wrap">
+                    <img class="object-contain" src="assets/img/icon/ETH_icon.png" alt="Ethereum">
+                    <h3>Ethereum</h3>
+                </div>
+                <div class="w-3/4 text-center">
+                    <p id="ethereumAddress" class="heading-tertiary">0x5c43fF73e3352BF06ef3c975eced44190A670A1f</p>
+                    <button onclick="copyText('ethereumAddress')">Click here to copy to clipboard</button> 
+                </div>
+            </div>
+            <div class="mb-8 flex flex-wrap">
+                <div class="w-1/4 flex flex-wrap">
+                    <img class="object-contain" src="assets/img/icon/BTC_icon.png" alt="Bitcoin">
+                    <h3>Bitcoin</h3>
+                </div>
+                <div class="w-3/4 text-center">
+                        <% if(!bitcoinAddress) { %>
+                            <p class="heading-tertiary">
+                                Error fetching bitcoin address, please contact support
+                            </p>
+                        <% } else { %>
+                            <p class="heading-tertiary" id="bitcoinAddress">
+                                <%= bitcoinAddress %>
+                            </p>
+                        <% } %>
+                    <button onclick="copyText('bitcoinAddress')">Click here to copy to clipboard</button>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center mx-auto">
+            <span class="font-bold">Important:</span> Make sure your conversion rates are locked in before sending
+            funds. If you send funds without a locked-in
+            rate, we will simply use the current spot price to calculate your MNT.
+            If for any reason you have not received your tokens in 7 days, please contact support@islandmining.io
+        </p>
+    </section>
+
+    <!-- Affiliate Program -->
+    <section class="container mx-auto px-16 py-12 mb-16">
+        <h1 class="heading-primary mb-8">Affiliate Program</h1>
+        <p class="text-center mb-16">
+            Use your referral link to share the Mining Coin Token Sale with your friends and colleagues. You will
+            receive a reward
+            in MNT for first and second tier referrals.
+            (i.e. if your friend signs up with your link, you will also receive a reward for MNT purchases referred by
+            your friend)
+        </p>
+
+        <div class="flex flex-wrap w-1/2 mx-auto mb-16">
+            <h3 class="heading-tertiary w-1/3">
+                Your referral link
+            </h3>
+            <div class="text-center w-2/3">
+                <div id="referralAddress" class="border-solid border-2 border-gray-500 rounded-lg">
+                    https://www.islandmining.io/ref/<%= referralAddress %>
+                </div>
+                <button onclick="copyText('referralAddress')">Click here to copy to clipboard</button>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap w-1/2 mx-auto">
+            <h3 class="heading-tertiary w-1/3 mb-16">
+                Share link
+            </h3>
+            <div class="flex flex-wrap w-2/3">
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+            </div>
+        </div>
+
+        <h3 class="heading-tertiary">
+            Reward table(MNT)
+        </h3>
+        <table class="mx-auto mb-16">
+            <tr>
+                <th></th>
+                <th>up to $10,000</th>
+                <th>$10,000 - $50,000</th>
+                <th>> $50,000</th>
+            </tr>
+            <tr>
+                <td>1st tier referral:</td>
+                <td>5.0%</td>
+                <td>6.5%</td>
+                <td>8.0%</td>
+            </tr>
+            <tr>
+                <td>2nd tier referral:</td>
+                <td>1.0%</td>
+                <td>1.5%</td>
+                <td>2.0%</td>
+            </tr>
+        </table>
+
+        <h3 class="heading-tertiary">
+            Your referrals
+        </h3>
+        <table class="mx-auto mb-16">
+            <tr>
+                <th></th>
+                <th># referred</th>
+                <th>total MNT purchased</th>
+                <th>your current reward</th>
+            </tr>
+            <tr>
+                <td>1st tier referral:</td>
+                <td>5.0%</td>
+                <td>6.5%</td>
+                <td>8.0%</td>
+            </tr>
+            <tr>
+                <td>2nd tier referral:</td>
+                <td>1.0%</td>
+                <td>1.5%</td>
+                <td>2.0%</td>
+            </tr>
+        </table>
+
+    </section>
+
+    <!-- Registration Info -->
+    <section class="container mx-auto px-16 py-12 mb-16">
+        <h1 class="heading-primary mb-8">Your Registration Info</h1>
+        <div class="flex flex-wrap w-2/3 mx-auto mb-16">
+            <div class="w-1/2">
+                First Name
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                Last Name
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                Date of Birth
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                Email Address
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                Street Address
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                City
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                Province/State/Prefecture
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                Country
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                KYC Document Type
+            </div>
+            <div class="w-1/2">
+
+            </div>
+            <div class="w-1/2">
+                Ethereum Wallet Address
+            </div>
+            <div class="w-1/2">
+
+            </div>
+        </div>
+
+        <p class="text-center heading-tertiary">
+            If any of the above information is incorrect, please contact support at support@islandmining.io
+        </p>
+    </section>
+    <div class="py-4">
+        &nbsp;
+    </div>
+
+    <script src="assets/js/dashboard.js"></script>
+</body>
+
+</html>
