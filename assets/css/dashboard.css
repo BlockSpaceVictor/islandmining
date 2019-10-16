@@ -23,6 +23,7 @@ html {
   line-height: 35px;
   scroll-behavior: smooth;
   padding: 5rem;
+  padding-top: 10rem;
   background-image: url(../img/misc/background.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -48,6 +49,7 @@ body {
   line-height: 35px;
   color: var(--color-black-1);
   background-color: white;
+  border-radius: 5px;
 }
 
 ul {
@@ -57,7 +59,7 @@ ul {
 .heading-primary {
   font-family: 'Poppins', sans-serif;
   font-size: 2.4rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 35px;
   color: #464457;
 }
@@ -73,10 +75,9 @@ ul {
 .heading-tertiary {
   font-family: 'Poppins', sans-serif;
   font-size: 1.4rem;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 35px;
   color: #3F3F3F;
-  ;
 }
 
 tr:not(:last-of-type) {
@@ -91,6 +92,10 @@ th, td {
   padding: 1.5rem;
   text-align: center;
   width: 20rem;
+}
+
+td {
+  padding: 1.5rem 3.5rem;
 }
 
 section {
@@ -120,4 +125,50 @@ section {
   color: #a94442;
   background-color: #f2dede;
   border-color: #ebccd1;
+}
+
+.button {
+  background-color: #4CAF50;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition: all .2s;
+  border-radius: 5px;
+}
+
+.button:hover {
+  margin-top: -3px;
+  background-color: #609268;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, .15);
+}
+
+.button:active {
+  margin-top: 0;
+  background-color: #609268;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .25);
+}
+
+.button.lockedIn {
+  background-color: gray !important;
+}
+
+.copyText {
+  font-style: italic;
+  color: #5D78FF;
+}
+
+.crypto_icon {
+  display: inline-block;
+  margin-right: 5px;
+  height: 20px;
+}
+
+i {
+  font-size: 25px;
+  padding-right: 10px;
 }

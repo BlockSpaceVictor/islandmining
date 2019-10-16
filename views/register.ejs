@@ -1,11 +1,31 @@
-<h1>Sign up form</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<form action="/register" method="POST">
-    <input type="email" name="username" placeholder="email">
-    <input type="password" name="password" placeholder="password">
-    <button>Submit</button>
-</form>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign up for Island Mining</title>
 
-<li><a href="/register">Sign Up!</a></li>
-<li><a href="/login">Login!</a></li>
-<li><a href="/logout">Logout!</a></li>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+</head>
+
+<body>
+    <div class="main">
+        <a href="/">
+            <img src="./assets/media/im_logo_mail_sm.png" alt="">
+        </a>
+        <h1 class="heading-primary py-8">
+            Create Account
+        </h1>
+        <form action="/register" method="POST">
+            <input class="mb-12" type="email" name="username" placeholder="iComply Email">
+            <input class="mb-24" type="password" name="password" placeholder="password">
+            <button class="button w-full">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>

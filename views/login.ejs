@@ -1,11 +1,29 @@
-<h1>Login</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign in to Island Mining</title>
 
-<form action="/login" method="POST">
-    <input type="email" name="username" placeholder="email">
-    <input type="password" name="password" placeholder="password">
-    <button>Submit</button>
-</form>
-
-<li><a href="/register">Sign Up!</a></li>
-<li><a href="/login">Login!</a></li>
-<li><a href="/logout">Logout!</a></li>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/tailwind.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body>
+    <div class="main">
+        <a href="/">
+            <img src="./assets/media/im_logo_mail_sm.png" alt="">
+        </a>
+        <h1 class="heading-primary py-8">
+            Sign In
+        </h1>
+        <form action="/login" method="POST">
+            <input class="mb-12" type="email" name="username" placeholder="email">
+            <input class="mb-24" type="password" name="password" placeholder="password">
+            <button class="button float-right">Submit</button>
+        </form>
+        <p>No account? <a style="color: #5D78FF" href="/register">Create one!</a></p>
+    </div>
+</body>
+</html>
