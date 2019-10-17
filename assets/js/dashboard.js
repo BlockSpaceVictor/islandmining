@@ -76,7 +76,6 @@ lockIn.addEventListener('submit', function (event) {
         usernameInput.setAttribute('name', 'username');
         usernameInput.setAttribute('value', document.getElementById('username').innerText);
 
-
         lockIn.appendChild(BTCPriceInput);
         lockIn.appendChild(ETHPriceInput);
         lockIn.appendChild(LTCPriceInput);
@@ -116,6 +115,7 @@ function checkTime(i) {
 }
 
 
-document.getElementById('official-time').innerText = hours + ":" + minutes + " " + suffix 
-
-
+/**
+ * Total Affiliate Awards
+ */
+document.getElementById('totalAffiliateAwards').innerHTML = parseInt(document.getElementById('current-awards--tier-1').innerHTML) + parseInt(document.getElementById('current-awards--tier-2').innerHTML)

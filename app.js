@@ -121,12 +121,14 @@ app.get('/dashboard', isLoggedIn, async function (req, res) {
                     username: userEmail,
                     verified: verified,
                     bitcoinAddress: user['bitcoinAddress'],
+                    referrals: user['referrals'],
                     referralAddress: user['referralAddress'],
                     prices: {
                         'BTC': listOfPrices['BTCUSDT'],
                         'ETH': listOfPrices['ETHUSDT'],
                         'LTC': listOfPrices['LTCUSDT']
                     },
+                    affiliatePermissions: user['affiliatePermissions'],
                     userInformation: userInformation,
                     isLockedIn: pricesLockedIn,
                     lockedInPrices: userLockedInPrices
@@ -137,11 +139,11 @@ app.get('/dashboard', isLoggedIn, async function (req, res) {
 
 // Auth Routes
 app.get('/register', function (req, res) {
-    /*
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
-    }*/
-    res.render('register');
+    } else {
+        res.render('register');
+    }
 });
 
 app.post('/register', async function (req, res) {
@@ -155,7 +157,6 @@ app.post('/register', async function (req, res) {
                 .derive(userIndex).publicKey,
         }),
     });
-    console.log(userIndex);
 
     User.register(new User({
         username: req.body.username,
@@ -169,6 +170,13 @@ app.post('/register', async function (req, res) {
         }
 
         passport.authenticate('local')(req, res, function () {
+            if (req.user.referralAddress != req.body.referral) {
+                User.findOneAndUpdate({ referralAddress: req.body.referral }, { $inc: { referrals: 1 } }, function (err) {
+                    console.log(err);
+                })
+            } else {
+                res.send('Cannot enter your own referral address');
+            }
             res.redirect('/dashboard');
         });
     });
@@ -177,12 +185,11 @@ app.post('/register', async function (req, res) {
 
 // Login Routes
 app.get('/login', function (req, res) {
-    /*
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
-    }*/
-
-    res.render('login');
+    } else {
+        res.render('login');
+    }
 });
 
 app.post('/login', passport.authenticate('local', {
@@ -206,6 +213,11 @@ app.post('/update', function (req, res) {
     User.findOneAndUpdate({ username: req.body.username }, { prices: JSON.stringify(req.body.prices) }, (err) => {
         if (err) console.log('Lock in user prices error:', err);
     });
+})
+
+// Referral
+app.post('/referral', isLoggedIn, function(req, res) {
+
 
 })
 

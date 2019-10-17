@@ -10,9 +10,17 @@ var UserSchema = new mongoose.Schema({
         type    : Boolean,
         default : false
     },
+    affiliatePermissions: {
+        type: Boolean,
+        default: false
+    },
     userIndex       : String,
     prices          : String,
     bitcoinAddress  : String,
+    referrals: {
+        type: Number,
+        default: 0, 
+    },
     referralAddress : String,
 
 });

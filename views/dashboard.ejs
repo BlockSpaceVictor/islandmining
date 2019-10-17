@@ -128,18 +128,18 @@
             <div class="alert alert-success font-bold text-center">
                 You are approved for the token sale!
             </div>
+            <p class="heading-secondary text-center mb-16">
+                Follow the steps below to purchase MNT. Your tokens will be sent to your wallet shortly after purchase.
+            </p>
             <% } else { %>
             <div class="alert alert-warning font-bold text-center">
                 Please complete KYC registration above.
             </div>
             <% } %>
-            <p class="heading-secondary text-center mb-16">
-                Follow the steps below to purchase MNT. Your tokens will be sent to your wallet shortly after purchase.
-            </p>
         </div>
 
 
-
+        <% if(verified === true) { %>
         <div class="flex flex-wrap mb-16 text-center">
             <div class="w-1/2">
                 <h3 class="heading-tertiary">
@@ -287,8 +287,10 @@
             rate, we will simply use the current spot price to calculate your MNT.
             If for any reason you have not received your tokens in 7 days, please contact support@islandmining.io
         </p>
+        <% } %>
     </section>
 
+    <% if(affiliatePermissions === true) { %>
     <!-- Affiliate Program -->
     <section class="container mx-auto px-16 py-12 mb-16">
         <h1 class="heading-primary mb-8">Affiliate Program</h1>
@@ -400,7 +402,7 @@
                 <td>
                     <div style="color: #5F5F5F"
                         class="font-bold border-solid border-2 border-gray-600 shadow-md rounded-lg">
-                        8
+                        <%= referrals %>
                     </div>
                 </td>
                 <td>
@@ -412,7 +414,7 @@
                 <td>
                     <div style="color: #009231"
                         class="font-bold border-solid border-2 border-green-500 shadow-md rounded-lg">
-                        6,020 MNT
+                        <span id="current-awards--tier-1">6,020</span> MNT
                     </div>
                 </td>
             </tr>
@@ -421,7 +423,7 @@
                 <td>
                     <div style="color: #5F5F5F"
                         class="font-bold border-solid border-2 border-gray-600 shadow-md rounded-lg">
-                        44
+                        <%= referrals %>
                     </div>
                 </td>
                 <td>
@@ -433,7 +435,7 @@
                 <td>
                     <div style="color: #009231"
                         class="font-bold border-solid border-2 border-green-500 shadow-md rounded-lg">
-                        43,007 MNT
+                        <span id="current-awards--tier-2">43,007</span> MNT
                     </div>
                 </td>
             </tr>
@@ -441,10 +443,11 @@
         <div class="text-center font-bold">
             Total Affiliate Rewards <span
                 class="border-solid border-2 border-green-500 shadow-md rounded-lg px-4 py-4 ml-4"
-                style="color:#009231">49,027 MNT</span>
+                style="color:#009231"><span id="totalAffiliateRewards">49,027</span> MNT</span>
         </div>
 
     </section>
+    <% } %>
 
     <!-- Registration Info -->
     <section class="container mx-auto px-16 py-12 mb-16">
