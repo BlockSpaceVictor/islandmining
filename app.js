@@ -14,7 +14,7 @@ var csv = require('csv-parser'),
     fs = require('fs');
 
 var xpub =
-    'xpub6CzDCPbtLrrn4VpVbyyQLHbdSMpZoHN4iuW64VswCyEpfjM2mJGdaHJ2DyuZwtst96E16VvcERb8BBeJdHSCVmAq9RhtRQg6eAZFrTKCNqf';
+    'xpub6Ci3DHRbomXva9UT2ZFDWwxeUVqw8vox45ofZCDMk5tpA8cQeiExu8BVPYhYbx6chuquywSgXofiSTbLjL9YzvVUC7VEkayTw5igbCCnmky';
 var CONNECTION_STRING = 'mongodb+srv://VictorHogrefe:Manowar2@cluster0-dbqcz.mongodb.net/user-registration-db?retryWrites=true&w=majority'
 mongoose.connect(CONNECTION_STRING);
 
@@ -37,7 +37,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // Routes
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     let loggedIn = false;
     let username;
     if (req.isAuthenticated()) {
@@ -47,7 +47,7 @@ app.get('/', function (req, res) {
     res.render('index', { username: username, loggedIn: loggedIn });
 });
 
-app.get('/dashboard', isLoggedIn, async function (req, res) {
+app.get('/dashboard', isLoggedIn, async function(req, res) {
     var listOfPrices = await client.prices();
 
     var userEmail = req.user.username;
@@ -74,8 +74,8 @@ app.get('/dashboard', isLoggedIn, async function (req, res) {
                     if (err) console.log('Error expiring price', err);
                 });
                 console.log('Deleting user prices')
-                // Enable lock in button again.
-                // Load normal currency prices
+                    // Enable lock in button again.
+                    // Load normal currency prices
                 pricesLockedIn = false;
             } else {
                 // Load user prices
@@ -111,7 +111,7 @@ app.get('/dashboard', isLoggedIn, async function (req, res) {
                             if (err) console.log('Update verified error:', err);
                         });
                         verified = true;
-                        console.log('Verified', userEmail);                        
+                        console.log('Verified', userEmail);
                     }
                 }
             })
@@ -138,7 +138,7 @@ app.get('/dashboard', isLoggedIn, async function (req, res) {
 });
 
 // Auth Routes
-app.get('/register', function (req, res) {
+app.get('/register', function(req, res) {
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
     } else {
@@ -146,7 +146,7 @@ app.get('/register', function (req, res) {
     }
 });
 
-app.post('/register', async function (req, res) {
+app.post('/register', async function(req, res) {
     var userIndex = await User.count();
     ++userIndex;
     var { address } = bjs.payments.p2sh({
@@ -163,15 +163,15 @@ app.post('/register', async function (req, res) {
         bitcoinAddress: address,
         userIndex: userIndex,
         referralAddress: Math.floor((Math.random() * 1000000000) + 1)
-    }), req.body.password, function (err, user) {
+    }), req.body.password, function(err, user) {
         if (err) {
             console.log(err);
             return res.render('register');
         }
 
-        passport.authenticate('local')(req, res, function () {
+        passport.authenticate('local')(req, res, function() {
             if (req.user.referralAddress != req.body.referral) {
-                User.findOneAndUpdate({ referralAddress: req.body.referral }, { $inc: { referrals: 1 } }, function (err) {
+                User.findOneAndUpdate({ referralAddress: req.body.referral }, { $inc: { referrals: 1 } }, function(err) {
                     console.log(err);
                 })
             } else {
@@ -184,7 +184,7 @@ app.post('/register', async function (req, res) {
 });
 
 // Login Routes
-app.get('/login', function (req, res) {
+app.get('/login', function(req, res) {
     if (req.isAuthenticated()) {
         res.redirect('/dashboard');
     } else {
@@ -195,17 +195,16 @@ app.get('/login', function (req, res) {
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/dashboard',
     failureRedirect: '/login'
-}), function (req, res) {
-});
+}), function(req, res) {});
 
 // Logout route
-app.get('/logout', function (req, res) {
+app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/login')
 })
 
 // Update user
-app.post('/update', function (req, res) {
+app.post('/update', function(req, res) {
     req.body.prices['expiryDate'] = new Date(Date.now() + 1000 * 60 * 60 * 12);
     console.log(req.body.prices);
     res.redirect('back');
@@ -229,6 +228,6 @@ function isLoggedIn(req, res, next) {
 }
 
 
-app.listen(process.env.PORT || 3000, function () {
+app.listen(process.env.PORT || 3000, function() {
     console.log('Server started');
 })
